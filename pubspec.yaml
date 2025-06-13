@@ -122,3 +122,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+  # Add images configuration
+  assets:
+    - assets/images/girl-avatar.png
+    - assets/images/mom-daughter-avatar.png
+    - assets/images/boy-avatar.png
+    - assets/images/mom-avatar.png

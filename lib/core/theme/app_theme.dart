@@ -6,7 +6,7 @@ class AppTheme {
 
 // Colors
 static const Color primaryColor = Color(0xFF95DFFF); // Light cyan-blue
-static const Color secondaryColor = Color(0xFF40C4FF); // Deeper sky blue
+static const Color secondaryColor = Color(0xFFFF6A31); // Orange
 static const Color accentColor = Color(0xFF26A69A); // Teal for highlights
 static const Color backgroundColor = Color(0xFFF7F9FC); // Off-white
 static const Color surfaceColor = Color(0xFFEFF3F6); // Soft gray-blue
@@ -59,7 +59,7 @@ static const Color textSecondaryColor = Color(0xFF757575); // Medium gray
 
   // Button Styles
   static final ButtonStyle primaryButtonStyle = ElevatedButton.styleFrom(
-    backgroundColor: primaryColor,
+    backgroundColor: secondaryColor,
     foregroundColor: Colors.white,
     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
     shape: RoundedRectangleBorder(
@@ -68,12 +68,12 @@ static const Color textSecondaryColor = Color(0xFF757575); // Medium gray
   );
 
   static final ButtonStyle secondaryButtonStyle = OutlinedButton.styleFrom(
-    foregroundColor: primaryColor,
+    foregroundColor: secondaryColor,
     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(8),
     ),
-    side: const BorderSide(color: primaryColor),
+    side: const BorderSide(color: secondaryColor),
   );
 
   // Input Decoration
@@ -98,7 +98,7 @@ static const Color textSecondaryColor = Color(0xFF757575); // Medium gray
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(color: primaryColor),
+        borderSide: const BorderSide(color: secondaryColor),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
