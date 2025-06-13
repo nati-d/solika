@@ -1,56 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'features/counter/data/datasources/counter_local_data_source.dart';
-import 'features/counter/data/repositories/counter_repository_impl.dart';
-import 'features/counter/domain/repositories/counter_repository.dart';
-import 'features/counter/domain/usecases/get_counter.dart';
-import 'features/counter/domain/usecases/increment_counter.dart';
-import 'features/counter/domain/usecases/decrement_counter.dart';
-import 'features/counter/presentation/bloc/counter_bloc.dart';
-import 'features/counter/presentation/bloc/counter_event.dart';
-import 'features/counter/presentation/pages/counter_page.dart';
+import 'features/onboarding/presentation/pages/onboarding_page.dart';
+import 'features/home/presentation/pages/home_page.dart';
+import 'core/routes/app_router.dart';
 
-final getIt = GetIt.instance;
-
-Future<void> init() async {
-  // Bloc
-  getIt.registerFactory(
-    () => CounterBloc(
-      getCounter: getIt(),
-      incrementCounter: getIt(),
-      decrementCounter: getIt(),
-    ),
-  );
-
-  // Use cases
-  getIt.registerLazySingleton(() => GetCounter(getIt()));
-  getIt.registerLazySingleton(() => IncrementCounter(getIt()));
-  getIt.registerLazySingleton(() => DecrementCounter(getIt()));
-
-  // Repository
-  getIt.registerLazySingleton<CounterRepository>(
-    () => CounterRepositoryImpl(
-      localDataSource: getIt(),
-    ),
-  );
-
-  // Data sources
-  getIt.registerLazySingleton<CounterLocalDataSource>(
-    () => CounterLocalDataSourceImpl(
-      sharedPreferences: getIt(),
-    ),
-  );
-
-  // External
-  final sharedPreferences = await SharedPreferences.getInstance();
-  getIt.registerLazySingleton(() => sharedPreferences);
-}
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await init();
+void main() {
   runApp(const MyApp());
 }
 
@@ -60,14 +14,51 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Counter App',
+      title: 'Clean Architecture Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: BlocProvider(
-        create: (_) => getIt<CounterBloc>()..add(GetCounterEvent()),
-        child: const CounterPage(),
+      home: const SplashScreen(),
+      routes: {
+        AppRouter.onboarding: (context) => const OnboardingPage(),
+        AppRouter.home: (context) => const HomePage(),
+      },
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _checkOnboardingStatus();
+  }
+
+  Future<void> _checkOnboardingStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    final onboardingCompleted = prefs.getBool('onboarding_completed') ?? false;
+
+    if (mounted) {
+      Navigator.pushReplacementNamed(
+        context,
+        onboardingCompleted ? AppRouter.home : AppRouter.onboarding,
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }
