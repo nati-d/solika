@@ -98,10 +98,8 @@ flutter:
       fonts:
         - asset: assets/fonts/ComicNeue/ComicNeue-Regular.ttf
           weight: 400
-          style: normal
         - asset: assets/fonts/ComicNeue/ComicNeue-Bold.ttf
           weight: 700
-          style: normal
         - asset: assets/fonts/ComicNeue/ComicNeue-Italic.ttf
           weight: 400
           style: italic
@@ -110,7 +108,6 @@ flutter:
           style: italic
         - asset: assets/fonts/ComicNeue/ComicNeue-Light.ttf
           weight: 300
-          style: normal
         - asset: assets/fonts/ComicNeue/ComicNeue-LightItalic.ttf
           weight: 300
           style: italic
@@ -125,7 +122,8 @@ flutter:
 
   # Add images configuration
   assets:
-    - assets/images/girl-avatar.png
-    - assets/images/mom-daughter-avatar.png
+    - assets/images/
     - assets/images/boy-avatar.png
+    - assets/images/girl-avatar.png
     - assets/images/mom-avatar.png
+    - assets/images/mom-daughter-avatar.png

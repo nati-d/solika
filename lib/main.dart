@@ -4,6 +4,9 @@ import 'features/onboarding/presentation/pages/onboarding_page.dart';
 import 'features/home/presentation/pages/home_page.dart';
 import 'core/routes/app_router.dart';
 import 'core/theme/app_theme.dart';
+import 'core/presentation/pages/splash_page.dart';
+import 'features/auth/presentation/pages/login_page.dart';
+import 'features/auth/presentation/pages/register_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,12 +18,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Clean Architecture Demo',
-      theme: AppTheme.theme,
-      home: const SplashScreen(),
+      title: 'Solika',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: AppTheme.primaryColor,
+          primary: AppTheme.primaryColor,
+          secondary: AppTheme.secondaryColor,
+          background: AppTheme.backgroundColor,
+        ),
+        useMaterial3: true,
+      ),
+      initialRoute: AppRouter.splash,
       routes: {
+        AppRouter.splash: (context) => const SplashPage(),
         AppRouter.onboarding: (context) => const OnboardingPage(),
-        AppRouter.home: (context) => const HomePage(),
+        AppRouter.login: (context) => const LoginPage(),
+        AppRouter.register: (context) => const RegisterPage(),
       },
     );
   }

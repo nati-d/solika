@@ -5,65 +5,75 @@ class AppTheme {
   AppTheme._();
 
 // Colors
-static const Color primaryColor = Color(0xFF95DFFF); // Light cyan-blue
-static const Color secondaryColor = Color(0xFFFF6A31); // Orange
+static const Color primaryColor = Color(0xFFFF6A31);
+static const Color secondaryColor = Color(0xFF26A69A); // Teal
 static const Color accentColor = Color(0xFF26A69A); // Teal for highlights
-static const Color backgroundColor = Color(0xFFF7F9FC); // Off-white
-static const Color surfaceColor = Color(0xFFEFF3F6); // Soft gray-blue
-static const Color errorColor = Color(0xFFEF5350); // Red for errors
-static const Color textPrimaryColor = Color(0xFF212121); // Dark gray
-static const Color textSecondaryColor = Color(0xFF757575); // Medium gray
+static const Color backgroundColor = Colors.white;
+static const Color surfaceColor = Color(0xFFFFF0EA); // Light orange background for inputs
+static const Color errorColor = Color(0xFFE53935); // Red for errors
+static const Color textPrimaryColor = Color(0xFF333333);
+static const Color textSecondaryColor = Color(0xFF666666); // Medium gray
 
   // Text Styles
   static const TextStyle heading1 = TextStyle(
     fontFamily: 'ComicNeue',
-    fontSize: 32,
+    fontSize: 40,
     fontWeight: FontWeight.bold,
     color: textPrimaryColor,
   );
 
   static const TextStyle heading2 = TextStyle(
     fontFamily: 'ComicNeue',
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: FontWeight.bold,
     color: textPrimaryColor,
   );
 
   static const TextStyle heading3 = TextStyle(
     fontFamily: 'ComicNeue',
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+    color: textPrimaryColor,
+  );
+
+  static const TextStyle heading4 = TextStyle(
+    fontFamily: 'ComicNeue',
     fontSize: 20,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.bold,
     color: textPrimaryColor,
   );
 
   static const TextStyle bodyLarge = TextStyle(
     fontFamily: 'ComicNeue',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: FontWeight.normal,
     color: textPrimaryColor,
   );
 
   static const TextStyle bodyMedium = TextStyle(
     fontFamily: 'ComicNeue',
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: FontWeight.normal,
     color: textPrimaryColor,
   );
 
   static const TextStyle bodySmall = TextStyle(
     fontFamily: 'ComicNeue',
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: FontWeight.normal,
-    color: textSecondaryColor,
+    color: textPrimaryColor,
   );
 
   // Button Styles
   static final ButtonStyle primaryButtonStyle = ElevatedButton.styleFrom(
-    backgroundColor: secondaryColor,
+    backgroundColor: primaryColor,
     foregroundColor: Colors.white,
-    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(16),
+    ),
+    textStyle: bodyLarge.copyWith(
+      fontWeight: FontWeight.bold,
     ),
   );
 
@@ -119,31 +129,57 @@ static const Color textSecondaryColor = Color(0xFF757575); // Medium gray
   );
 
   // App Theme Data
-  static ThemeData get theme => ThemeData(
-        primaryColor: primaryColor,
-        scaffoldBackgroundColor: backgroundColor,
-        colorScheme: const ColorScheme.light(
-          primary: primaryColor,
-          secondary: secondaryColor,
-          error: errorColor,
-          background: backgroundColor,
-          surface: surfaceColor,
+  static ThemeData get lightTheme {
+    return ThemeData(
+      primaryColor: primaryColor,
+      scaffoldBackgroundColor: backgroundColor,
+      colorScheme: const ColorScheme.light(
+        primary: primaryColor,
+        secondary: secondaryColor,
+        background: backgroundColor,
+      ),
+      textTheme: const TextTheme(
+        displayLarge: heading1,
+        displayMedium: heading2,
+        displaySmall: heading3,
+        headlineMedium: heading4,
+        bodyLarge: bodyLarge,
+        bodyMedium: bodyMedium,
+        bodySmall: bodySmall,
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: primaryButtonStyle,
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: surfaceColor,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide.none,
         ),
-        textTheme: const TextTheme(
-          displayLarge: heading1,
-          displayMedium: heading2,
-          displaySmall: heading3,
-          bodyLarge: bodyLarge,
-          bodyMedium: bodyMedium,
-          bodySmall: bodySmall,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide.none,
         ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: primaryButtonStyle,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: primaryColor, width: 2),
         ),
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: secondaryButtonStyle,
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: Colors.red.shade300, width: 2),
         ),
-        cardTheme: cardTheme,
-        useMaterial3: true,
-      );
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: Colors.red.shade300, width: 2),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: secondaryButtonStyle,
+      ),
+      cardTheme: cardTheme,
+      useMaterial3: true,
+    );
+  }
 } 

@@ -44,36 +44,50 @@ class OnboardingContentWidget extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmallScreen = screenHeight < 600;
+    final isVerySmallScreen = screenHeight < 500;
 
     return Padding(
-      padding: EdgeInsets.all(isSmallScreen ? 24.0 : 40.0),
+      padding: EdgeInsets.symmetric(
+        horizontal: isSmallScreen ? 16.0 : 24.0,
+        vertical: isSmallScreen ? 16.0 : 24.0,
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            content.imagePath,
-            height: isSmallScreen ? screenHeight * 0.3 : 300,
-            fit: BoxFit.contain,
-          ),
-          SizedBox(height: isSmallScreen ? 24 : 32),
-          Text(
-            content.title,
-            style: AppTheme.heading1.copyWith(
-              color: AppTheme.secondaryColor,
-              fontSize: isSmallScreen ? 32 : 40,
-              fontWeight: FontWeight.w900,
-              height: 1.2,
+          Expanded(
+            flex: 3,
+            child: Image.asset(
+              content.imagePath,
+              fit: BoxFit.contain,
             ),
-            textAlign: TextAlign.center,
           ),
-          SizedBox(height: isSmallScreen ? 12 : 16),
-          Text(
-            content.description,
-            style: AppTheme.bodyLarge.copyWith(
-              color: AppTheme.textPrimaryColor,
-              fontSize: isSmallScreen ? 14 : 16,
+          SizedBox(height: isVerySmallScreen ? 16 : isSmallScreen ? 24 : 32),
+          Expanded(
+            flex: 2,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  content.title,
+                  style: AppTheme.heading1.copyWith(
+                    color: AppTheme.secondaryColor,
+                    fontSize: isVerySmallScreen ? 24 : isSmallScreen ? 32 : 40,
+                    fontWeight: FontWeight.w900,
+                    height: 1.2,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: isVerySmallScreen ? 8 : isSmallScreen ? 12 : 16),
+                Text(
+                  content.description,
+                  style: AppTheme.bodyLarge.copyWith(
+                    color: AppTheme.textPrimaryColor,
+                    fontSize: isVerySmallScreen ? 12 : isSmallScreen ? 14 : 16,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
-            textAlign: TextAlign.center,
           ),
         ],
       ),

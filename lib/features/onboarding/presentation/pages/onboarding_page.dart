@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'onboarding_content.dart';
 import '../../../../core/routes/app_router.dart';
 import '../../../../core/theme/app_theme.dart';
+import 'onboarding_content.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -21,17 +21,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
     super.dispose();
   }
 
-  void _onPageChanged(int page) {
-    setState(() {
-      _currentPage = page;
-    });
-  }
-
-  Future<void> _completeOnboarding() async {
+  void _completeOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('onboarding_completed', true);
+    await prefs.setBool('has_seen_onboarding', true);
     if (mounted) {
-      Navigator.pushReplacementNamed(context, AppRouter.home);
+      Navigator.pushReplacementNamed(context, AppRouter.login);
     }
   }
 
@@ -40,22 +34,20 @@ class _OnboardingPageState extends State<OnboardingPage> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmallScreen = screenHeight < 600;
+    final isVerySmallScreen = screenHeight < 500;
 
     return Scaffold(
       backgroundColor: AppTheme.backgroundColor,
       body: SafeArea(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Align(
-                alignment: Alignment.centerRight,
+            // Skip button
+            Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
                 child: TextButton(
                   onPressed: _completeOnboarding,
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  ),
                   child: Text(
                     'Skip',
                     style: AppTheme.bodyLarge.copyWith(
@@ -66,39 +58,44 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 ),
               ),
             ),
+            // Main content
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
-                onPageChanged: _onPageChanged,
                 itemCount: onboardingContents.length,
-                itemBuilder: (context, index) => SingleChildScrollView(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: screenHeight - 200, // Account for top and bottom sections
-                    ),
-                    child: OnboardingContentWidget(
-                      content: onboardingContents[index],
-                    ),
-                  ),
-                ),
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentPage = index;
+                  });
+                },
+                itemBuilder: (context, index) {
+                  return OnboardingContentWidget(
+                    content: onboardingContents[index],
+                  );
+                },
               ),
             ),
+            // Bottom section with dots and button
             Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: 24.0,
+                horizontal: isSmallScreen ? 16.0 : 24.0,
                 vertical: isSmallScreen ? 16.0 : 24.0,
               ),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
                 children: [
+                  // Dots indicator
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(
                       onboardingContents.length,
                       (index) => Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 6),
-                        height: 8,
-                        width: _currentPage == index ? 24 : 8,
+                        margin: EdgeInsets.symmetric(
+                          horizontal: isSmallScreen ? 4.0 : 6.0,
+                        ),
+                        width: _currentPage == index 
+                            ? (isSmallScreen ? 24.0 : 32.0) 
+                            : (isSmallScreen ? 8.0 : 10.0),
+                        height: isSmallScreen ? 8.0 : 10.0,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
                           color: _currentPage == index
@@ -108,22 +105,30 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: isSmallScreen ? 16 : 24),
+                  SizedBox(height: isSmallScreen ? 16.0 : 24.0),
+                  // Next/Get Started button
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: _currentPage == onboardingContents.length - 1
-                          ? _completeOnboarding
-                          : () {
-                              _pageController.nextPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut,
-                              );
-                            },
+                      onPressed: () {
+                        if (_currentPage == onboardingContents.length - 1) {
+                          _completeOnboarding();
+                        } else {
+                          _pageController.nextPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        }
+                      },
                       style: AppTheme.primaryButtonStyle.copyWith(
                         padding: MaterialStateProperty.all(
                           EdgeInsets.symmetric(
-                            vertical: isSmallScreen ? 16 : 20,
+                            vertical: isVerySmallScreen ? 12 : isSmallScreen ? 16 : 20,
+                          ),
+                        ),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
                           ),
                         ),
                       ),
@@ -133,8 +138,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                             : 'Next',
                         style: AppTheme.heading2.copyWith(
                           color: Colors.white,
+                          fontSize: isVerySmallScreen ? 18 : isSmallScreen ? 20 : 24,
                           fontWeight: FontWeight.bold,
-                          fontSize: isSmallScreen ? 20 : 24,
                         ),
                       ),
                     ),
