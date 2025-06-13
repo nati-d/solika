@@ -15,18 +15,18 @@ class OnboardingContent {
 
 final List<OnboardingContent> onboardingContents = [
   OnboardingContent(
-    title: 'Welcome to Clean Architecture',
-    description: 'Learn how to build scalable and maintainable Flutter applications using Clean Architecture principles.',
+    title: 'Welcome to Fun Learning',
+    description: 'Hi friends! I\'m Solika—let\'s learn Afaan Oromo together!',
     imagePath: 'assets/images/girl-avatar.png',
   ),
   OnboardingContent(
-    title: 'Separation of Concerns',
-    description: 'Keep your code organized with clear separation between domain, data, and presentation layers.',
+    title: 'Learn with Me and Mom',
+    description: 'Hear words with us, play games, and have fun learning',
     imagePath: 'assets/images/mom-daughter-avatar.png',
   ),
   OnboardingContent(
-    title: 'Ready to Start',
-    description: 'Begin your journey with Clean Architecture and build better Flutter applications.',
+    title: 'Explore Ethiopian Culture',
+    description: 'Unlock more words and connect with Ethiopia!',
     imagePath: 'assets/images/mom-avatar.png',
   ),
 ];
@@ -58,9 +58,11 @@ class OnboardingContentWidget extends StatelessWidget {
           SizedBox(height: isSmallScreen ? 24 : 32),
           Text(
             content.title,
-            style: AppTheme.heading2.copyWith(
-              color: AppTheme.primaryColor,
-              fontSize: isSmallScreen ? 20 : 24,
+            style: AppTheme.heading1.copyWith(
+              color: AppTheme.secondaryColor,
+              fontSize: isSmallScreen ? 32 : 40,
+              fontWeight: FontWeight.w900,
+              height: 1.2,
             ),
             textAlign: TextAlign.center,
           ),

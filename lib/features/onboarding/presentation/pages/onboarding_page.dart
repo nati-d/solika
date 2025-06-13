@@ -59,7 +59,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   child: Text(
                     'Skip',
                     style: AppTheme.bodyLarge.copyWith(
-                      color: Colors.white,
+                      color: AppTheme.secondaryColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
