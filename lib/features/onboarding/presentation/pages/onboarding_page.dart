@@ -51,7 +51,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   child: Text(
                     'Skip',
                     style: AppTheme.bodyLarge.copyWith(
-                      color: AppTheme.secondaryColor,
+                      color: AppTheme.primaryColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -99,8 +99,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
                           color: _currentPage == index
-                              ? AppTheme.secondaryColor
-                              : AppTheme.secondaryColor.withOpacity(0.3),
+                              ? AppTheme.primaryColor
+                              : AppTheme.primaryColor.withOpacity(0.3),
                         ),
                       ),
                     ),

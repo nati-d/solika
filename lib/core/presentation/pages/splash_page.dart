@@ -20,16 +20,8 @@ class _SplashPageState extends State<SplashPage> {
     await Future.delayed(const Duration(seconds: 2));
     if (!mounted) return;
 
-    final prefs = await SharedPreferences.getInstance();
-    final hasSeenOnboarding = prefs.getBool('has_seen_onboarding') ?? false;
-
-    if (!mounted) return;
-
-    if (hasSeenOnboarding) {
-      Navigator.pushReplacementNamed(context, AppRouter.login);
-    } else {
-      Navigator.pushReplacementNamed(context, AppRouter.onboarding);
-    }
+    // Always navigate to onboarding
+    Navigator.pushReplacementNamed(context, AppRouter.onboarding);
   }
 
   @override
