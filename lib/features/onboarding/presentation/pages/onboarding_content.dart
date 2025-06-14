@@ -70,7 +70,7 @@ class OnboardingContentWidget extends StatelessWidget {
                 Text(
                   content.title,
                   style: AppTheme.heading1.copyWith(
-                    color: AppTheme.secondaryColor,
+                    color: AppTheme.primaryColor,
                     fontSize: isVerySmallScreen ? 24 : isSmallScreen ? 32 : 40,
                     fontWeight: FontWeight.w900,
                     height: 1.2,
